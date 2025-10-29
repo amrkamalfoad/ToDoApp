@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <div class="container">
+        <div class="inputBox">
+            <input id="searchField"  type="text" placeholder="TaskName To search">
+               <div class="dropdown">
+                    <input type="text" placeholder="List To search" class="dropdown-input">
+                    <ul class="dropdown-menu">
+                        <li data-value="Pending">Pending</li>
+                        <li data-value="completed">Completed</li>
+                    </ul>
+                </div>
+            <button id="search">Search</button>  
+        </div>
+        <div class="inputBox">
+            <input id="addingField" type="text" placeholder="Enter a Task">
+            <button id="add">Add</button>
+        </div>
+        <div class="todo-section">
+            <h3>Pending Todos</h3>
+            <div class="pending-todos">
+                <!-- <div class="todo-item">
+                    <span>Buy milk</span>
+                    <button class="complete-btn">Mark ✔</button>
+                </div>
+                <div class="todo-item">
+                    <span>Finish project</span>
+                    <button class="complete-btn">Mark ✔</button>
+                </div> -->
+                <!-- <div class="todo-empty">
+                    <div class="empty-icon">✔</div>
+                    <h3>No Pending Tasks</h3>
+                    <p>You are all caught up, great job! 🎉</p>
+                </div> -->
+            </div>
+        </div>
+        <div class="todo-section">
+            <h3>Completed Todos</h3>
+            <div class="completed-todos">
+                <!-- <div class="todo-item completed">
+                    <span>Pay bills</span>
+                    <button class="delete-btn">Delete</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/script.js"></script>
+</html>
