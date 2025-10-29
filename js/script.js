@@ -96,7 +96,7 @@ addBtn.addEventListener('click', () => {
     name: taskName,
     status: 'pending',
   };
-
+  filteredTodos = null;
   todos.push(newTodo); 
   saveAndRender(); 
   taskinput.value = ''; 
