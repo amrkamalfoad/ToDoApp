@@ -1,4 +1,7 @@
-let todos= JSON.parse(localStorage.getItem('todos')) || [];
+import { db } from "./firebase.js";
+import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, onSnapshot } 
+from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+let todos = [];  // <-- Firestore will fill this list
 
 
 const addBtn = document.querySelector('#add');
@@ -15,6 +18,21 @@ const searchButton = document.querySelector('#search');
  
 
 let filteredTodos = null;
+
+function listenToTodos() {
+  const todosRef = collection(db, "todos");
+
+  onSnapshot(todosRef, (snapshot) => {   // ✅ real-time listener
+    todos = [];
+    snapshot.forEach(docItem => {
+      todos.push({ id: docItem.id, ...docItem.data() });
+    });
+    renderTodos(); // UI updates automatically on any change
+  });
+}
+
+
+
 function renderTodos(){
     const listToRender = filteredTodos ?? todos; // If filtered, use it, else original
     completedContainer.innerHTML=''
@@ -39,10 +57,10 @@ function renderTodos(){
                 const completeBtn = document.createElement('button');
                 completeBtn.classList.add('complete-btn');
                 completeBtn.textContent = 'Mark ✔';
-                completeBtn.addEventListener('click',()=>{
-                    element.status='completed';
-                    filteredTodos = null;
-                    saveAndRender();
+                completeBtn.addEventListener('click', async () => {
+                  await updateDoc(doc(db, "todos", element.id), { status: "completed" });
+                  filteredTodos = null;
+                  renderTodos();
                 });
                 todoItem.appendChild(taskspan);
                 todoItem.appendChild(completeBtn);
@@ -52,10 +70,10 @@ function renderTodos(){
                 const deleteBtn = document.createElement('button');
                 deleteBtn.classList.add('delete-btn');
                 deleteBtn.textContent = 'Delete';
-                deleteBtn.addEventListener('click', () => {
-                    todos = todos.filter((t) => t.id !== element.id); // remove by ID
-                    filteredTodos = null;
-                    saveAndRender(); // save and refresh
+                deleteBtn.addEventListener('click', async () => {
+                  await deleteDoc(doc(db, "todos", element.id));
+                  filteredTodos = null;
+                  renderTodos();
                 });
                 todoItem.appendChild(taskspan);
                 todoItem.appendChild(deleteBtn);
@@ -84,36 +102,28 @@ searchButton.addEventListener("click", () => {
     renderTodos();
 });
 
-addBtn.addEventListener('click', () => {
+// ✅ Add Todo → Firestore instead of localStorage
+addBtn.addEventListener('click', async () => {
   const taskName = taskinput.value.trim();
-  if (taskName === '') {
-    return alert('Please enter a Task name');
-  }
+  if (taskName === '') return alert('Please enter a Task name');
 
-  // Create new todo object
-  const newTodo = {
-    id: Date.now(), // unique ID
+  await addDoc(collection(db, "todos"), {
     name: taskName,
-    status: 'pending',
-  };
-  filteredTodos = null;
-  todos.push(newTodo); 
-  saveAndRender(); 
-  taskinput.value = ''; 
+    status: "pending"
+  });
+
+  taskinput.value = '';
 });
+
 
 function countPendingACompleted(arr){
   let pending=0;
   let completed=0;
-   for(element in arr){
-      if (arr[element].status=== 'pending') pending++;
-      if (arr[element].status === 'completed') completed++;
-    }
+  for (const item of arr) {   // ✅ correct loop
+    if (item.status === 'pending') pending++;
+    if (item.status === 'completed') completed++;
+  }
   return [pending,completed];
-}
-function saveAndRender() {
-  localStorage.setItem('todos', JSON.stringify(todos)); // save to storage
-  renderTodos(); // refresh UI
 }
 
 function createEmptyPendingElement() {
@@ -170,7 +180,7 @@ function dropdownAction(){
 
 
 dropdownAction();
-renderTodos();
+listenToTodos();
 
 
 
