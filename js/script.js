@@ -58,9 +58,8 @@ function renderTodos(){
                 completeBtn.classList.add('complete-btn');
                 completeBtn.textContent = 'Mark ✔';
                 completeBtn.addEventListener('click', async () => {
-                  await updateDoc(doc(db, "todos", element.id), { status: "completed" });
                   filteredTodos = null;
-                  renderTodos();
+                  await updateDoc(doc(db, "todos", element.id), { status: "completed" });
                 });
                 todoItem.appendChild(taskspan);
                 todoItem.appendChild(completeBtn);
@@ -71,9 +70,8 @@ function renderTodos(){
                 deleteBtn.classList.add('delete-btn');
                 deleteBtn.textContent = 'Delete';
                 deleteBtn.addEventListener('click', async () => {
-                  await deleteDoc(doc(db, "todos", element.id));
                   filteredTodos = null;
-                  renderTodos();
+                  await deleteDoc(doc(db, "todos", element.id));
                 });
                 todoItem.appendChild(taskspan);
                 todoItem.appendChild(deleteBtn);
@@ -106,12 +104,11 @@ searchButton.addEventListener("click", () => {
 addBtn.addEventListener('click', async () => {
   const taskName = taskinput.value.trim();
   if (taskName === '') return alert('Please enter a Task name');
-
+  filteredTodos = null;
   await addDoc(collection(db, "todos"), {
     name: taskName,
     status: "pending"
   });
-
   taskinput.value = '';
 });
 
