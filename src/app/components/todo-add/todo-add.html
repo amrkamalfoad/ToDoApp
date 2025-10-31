@@ -1,4 +1,4 @@
  <div class="inputBox">
-            <input id="addingField" type="text" placeholder="Enter a Task">
-            <button id="add">Add</button>
+    <input [(ngModel)]="task" type="text" placeholder="Enter a Task">
+    <button id="add" (click)="addTask()">Add</button>
 </div>

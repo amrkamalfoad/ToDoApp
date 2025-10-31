@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,computed } from '@angular/core';
+import { Todo } from '../../services/todo';
 
 @Component({
   selector: 'app-todo-completed-list',
@@ -8,5 +9,13 @@ import { Component } from '@angular/core';
   styleUrl: './todo-completed-list.css',
 })
 export class TodoCompletedList {
+  constructor(public todoService: Todo) {};
+  completedTodos = computed(() =>
+    this.todoService.todos().filter(t => t.completed)
+  );
 
+  completedCount = computed(() =>
+    this.completedTodos().length
+  );
+ 
 }

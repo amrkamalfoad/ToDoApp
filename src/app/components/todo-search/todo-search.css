@@ -108,6 +108,8 @@
   transition: transform 0.25s;
 }
 
+
+
 .dropdown.open::after {
   transform: translateY(-50%) rotate(180deg);
 }
