@@ -1,0 +1,64 @@
+.todo-section {
+  background-color: #fafafa;
+  padding: 20px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+
+.todo-section:hover {
+  transform: translateY(-3px);
+}
+
+.todo-section h3 {
+  text-align: center;
+  color: #004d40;
+  border-bottom: 2px solid #c8e6c9;
+  padding-bottom: 5px;
+}
+
+.completed-todos div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border-radius: 6px;
+  border: 1px solid #c8e6c9;
+  background: #fff;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+
+.completed-todos div:hover {
+  background-color: #f1f8e9;
+}
+
+.completed-todos div button {
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 15px;
+  text-align: center;
+  background-color: #e53935;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.completed-todos div button:hover {
+  background-color: #c62828;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .completed-todos div {
+    flex-direction: column; 
+    gap: 8px;
+  }
+
+  .completed-todos div button {
+    width: 100%;
+  }
+}

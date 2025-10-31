@@ -1,1 +1,359 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  background: linear-gradient(135deg, #e0f7fa, #e8f5e9); 
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #00695c; 
+  margin-top: 20px;
+  font-size: 2.2rem;
+}
+
+.container {
+  width: 60%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 15px;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  place-items: start;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+
+.inputBox {
+  padding: 10px 15px;
+  background-color: #f1f8e9; 
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  grid-column: 1 / span 2;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputBox input {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s;
+  flex: 1;
+}
+
+.inputBox input:focus {
+  border-color: #388e3c; 
+}
+
+.inputBox button {
+  background-color: #43a047; 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  transition: all 0.3s ease;
+  flex:0.5;
+}
+
+.inputBox button:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+}
+
+/* === DROPDOWN CONTAINER === */
+.dropdown {
+  position: relative;
+  width: 200px;
+  font-family: Arial, sans-serif;
+}
+
+.dropdown-input {
+  cursor: pointer;
+  outline: none;
+  transition: 0.25s;
+}
+
+/* focus effect */
+.dropdown-input:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* === DROPDOWN MENU === */
+.dropdown-menu {
+  display: none; /* hidden by default */
+  position: absolute;
+  top: 44px;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 100;
+  animation: fadeIn 0.15s ease-in-out;
+}
+
+/* fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === MENU ITEMS === */
+.dropdown-menu li {
+  padding: 10px;
+  text-align: left;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* hover effect */
+.dropdown-menu li:hover {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+/* === ARROW ICON === */
+.dropdown::after {
+  content: "▾";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #555;
+  pointer-events: none;
+  transition: transform 0.25s;
+}
+
+/* rotate arrow when open */
+.dropdown.open::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+
+.todo-section {
+  grid-column: span 1;
+  background-color: #fafafa;
+  padding: 20px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.todo-section:hover {
+  transform: translateY(-3px);
+}
+
+.todo-section h3 {
+  text-align: center;
+  color: #004d40; 
+  border-bottom: 2px solid #c8e6c9;
+  padding-bottom: 5px;
+}
+
+
+.pending-todos div,
+.completed-todos div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border: 1px solid #c8e6c9;
+  border-radius: 6px;
+  background-color: #fff;
+  margin-top: 10px;
+  transition: all 0.2s ease;
+}
+
+.pending-todos div:hover,
+.completed-todos div:hover {
+  background-color: #f1f8e9;
+}
+
+
+.completed-todos div button {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 15px;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.completed-todos div button:hover {
+  background-color: #c62828;
+  transform: scale(1.05);
+}
+
+
+.complete-btn {
+  background-color: #43a047; 
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.complete-btn:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+}
+
+
+/* Empty State Box */
+.todo-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 20px;
+  border: 2px dashed #c8c8c8;
+  border-radius: 10px;
+  background: #fafafa;
+  margin: 15px 0;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Green circular check icon */
+.empty-icon {
+  background: #4caf50;
+  color: green;
+  font-size: 20px;
+  padding: 10px 20px 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* Title */
+.todo-empty h3 {
+  font-size: 17px;
+  font-weight: 600;
+  color: #383838;
+  margin-bottom: 5px;
+}
+
+/* Message */
+.todo-empty p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------- MEDIA QUERIES ---------------- */
+
+@media (max-width: 992px) {
+  .container {
+    width: 80%;
+  }
+
+  .inputBox {
+    flex-direction: column;
+    gap: 10px;
+  }
+   .inputBox input {
+     width: 100%;
+  }
+  .inputBox button {
+    width: 100%;
+  }
+  
+  .dropdown{
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    background: linear-gradient(135deg, #c8e6c9, #b2ebf2); 
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .container {
+    width: 95%;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .todo-section {
+    padding: 15px;
+  }
+
+  .pending-todos div,
+  .completed-todos div {
+    flex-direction: column; 
+    gap: 8px;
+  }
+
+  .complete-btn,
+  .completed-todos div button {
+    width: 100%;
+  }
+  
+  .dropdown{
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    width: 98%;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .inputBox input {
+    width: 100%;
+  }
+
+  .inputBox button {
+    width: 100%;
+  }
+  .dropdown{
+    width: 100%;
+  }
+}

@@ -1,0 +1,69 @@
+.inputBox {
+  padding: 10px 15px;
+  background-color: #f1f8e9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.inputBox input {
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputBox input:focus {
+  border-color: #388e3c;
+}
+
+.inputBox button {
+  flex: 0.5;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  background-color: #43a047;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.inputBox button:hover {
+  background-color: #2e7d32;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .inputBox {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .inputBox input {
+    width: 100%;
+  }
+  
+  .inputBox button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .inputBox input {
+    width: 100%;
+  }
+
+  .inputBox button {
+    width: 100%;
+  }
+}
