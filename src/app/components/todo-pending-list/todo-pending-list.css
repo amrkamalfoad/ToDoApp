@@ -51,7 +51,6 @@
   transform: scale(1.05);
 }
 
-/* Responsive */
 @media (max-width: 600px) {
   .pending-todos div {
     flex-direction: column; 
