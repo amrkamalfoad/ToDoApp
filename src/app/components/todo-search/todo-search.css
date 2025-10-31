@@ -42,6 +42,7 @@
   transform: scale(1.05);
 }
 
+/* Dropdown */
 .dropdown {
   position: relative;
   width: 200px;
@@ -75,6 +76,10 @@
   margin: 0;
   z-index: 100;
   animation: fadeIn 0.15s ease-in-out;
+}
+
+.dropdown-menu.open {
+  display: block;
 }
 
 .dropdown-menu li {

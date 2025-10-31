@@ -9,6 +9,7 @@ import { TodoCompletedList } from "./components/todo-completed-list/todo-complet
   selector: 'app-root',
   imports: [RouterOutlet, TodoSearch, TodoAdd, TodoPendingList, TodoCompletedList],
   templateUrl: './app.html',
+  standalone: true,
   styleUrl: './app.css',
   encapsulation: ViewEncapsulation.Emulated  // default
 })
