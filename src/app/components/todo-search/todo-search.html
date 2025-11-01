@@ -1,11 +1,12 @@
 <div class="inputBox">
-            <input id="searchField"  type="text" placeholder="TaskName To search">
+            <input id="searchField" [(ngModel)]="task"  type="text" placeholder="TaskName To search">
                <div class="dropdown" [ngClass]="{'open': isOpen}"  (click)="toggleDropdown()" >
-                    <input type="text" placeholder="List To search" class="dropdown-input" >
+                    <input [(ngModel)]="selectedmenu" type="text" placeholder="List To search" class="dropdown-input" >
                     <ul class="dropdown-menu" [ngClass]="{'open': isOpen}">
-                        <li data-value="Pending">Pending</li>
-                        <li data-value="completed">Completed</li>
+                        @for (menu of dropDownMenu(); track menu) {
+                            <li data-value="{{menu}}" (click)="selectMenu(menu)">{{menu}}</li>
+                        }
                     </ul>
                 </div>
-            <button id="search">Search</button>  
+            <button id="search" (click)="searchTask(selectedmenu)">Search</button>  
 </div>

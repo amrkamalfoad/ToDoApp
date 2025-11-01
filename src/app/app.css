@@ -58,7 +58,7 @@ app-todo-completed-list {
   app-todo-add,
   app-todo-pending-list,
   app-todo-completed-list {
-    grid-column: 1 span 2	;
+    grid-column: 1 / span 2	;
   }
 }
 
@@ -75,7 +75,7 @@ app-todo-completed-list {
   app-todo-add,
   app-todo-pending-list,
   app-todo-completed-list {
-    grid-column: 1 span 2;
+    grid-column: 1 / span 2;
   }
 }
 

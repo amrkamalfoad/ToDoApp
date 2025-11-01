@@ -1,14 +1,14 @@
 <div class="todo-section">
-    <h3>Pending Todos ({{pendingCount()}})</h3>
+    <h3>Pending Todos ({{todoService.pendingCount()}})</h3>
     <div class="pending-todos">
-        @if (pendingCount()==0) {
+        @if (todoService.pendingCount()==0) {
             <div class="todo-empty">
                 <div class="empty-icon">✔</div>
                 <h3>No Pending Tasks</h3>
                 <p>You are all caught up, great job! 🎉</p>
             </div>
         }
-        @for (todo of pendingTodos(); track todo.id) {
+        @for (todo of todoService.pendingTodos(); track todo.id) {
             <div class="todo-item">
                 <span>{{todo.task}}</span>
                 <button class="complete-btn" (click)="todoService.completeTodo(todo.id)">Mark ✔</button>

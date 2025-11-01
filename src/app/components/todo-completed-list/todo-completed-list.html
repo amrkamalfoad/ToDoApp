@@ -1,14 +1,14 @@
 <div class="todo-section">
-    <h3>Completed Todos ({{completedCount()}})</h3>
+    <h3>Completed Todos ({{todoService.completedCount()}})</h3>
     <div class="completed-todos">
-        @if (completedCount()==0) {
+        @if (todoService.completedCount()==0) {
             <div class="todo-empty">
                 <div class="empty-icon">✔</div>
                 <h3>No Completed Tasks</h3>
                 <p>No tasks completed yet 🚀 </p>
             </div>
         }
-        @for (todo of completedTodos(); track todo.id) {
+        @for (todo of todoService.completedTodos(); track todo.id) {
             <div class="todo-item">
                 <span>{{todo.task}}</span>
                 <button class="delete-btn" (click)="todoService.deleteTodo(todo.id)">Delete</button>

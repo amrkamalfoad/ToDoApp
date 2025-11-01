@@ -10,12 +10,4 @@ import { Todo } from '../../services/todo';
 })
 export class TodoCompletedList {
   constructor(public todoService: Todo) {};
-  completedTodos = computed(() =>
-    this.todoService.todos().filter(t => t.completed)
-  );
-
-  completedCount = computed(() =>
-    this.completedTodos().length
-  );
- 
 }

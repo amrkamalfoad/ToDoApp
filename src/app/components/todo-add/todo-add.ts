@@ -18,6 +18,9 @@ export class TodoAdd {
       this.todoService.addTodo(value);
       console.log(this.todoService.todos());
       this.task='';
-    };
+    }else{
+      alert('Please enter a task to add');
+      return;
+    }
   }
 }
