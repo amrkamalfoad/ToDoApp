@@ -1,6 +1,6 @@
 import { Injectable, signal, computed, effect, inject } from '@angular/core';
 import { Firestore, collection, collectionData, addDoc, deleteDoc, doc, updateDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable,from } from 'rxjs';
 
 export interface todo {
   id: string;        // Firestore ID (string)
@@ -35,25 +35,44 @@ export class Todo {
       });
   }
 
-  async addTodo(task: string) {
+  addTodo(task: string) {
     try {
-      await addDoc(this.todosCollection, { task, completed: false });
+      return from(addDoc(this.todosCollection, { task, completed: false }));
     } catch (error) {
       console.error('Error adding todo:', error);
       throw new Error('Failed to save todo. Please check Firebase configuration.');
     }
   }
 
-  async completeTodo(id: string) {
+  completeTodo(id: string) {
     const ref = doc(this.firestore, `todos/${id}`);
-    await updateDoc(ref, { completed: true });
+    return from(updateDoc(ref, { completed: true }));
+  }
+  markCompleted(id :string){
+    this.completeTodo(id).subscribe(
+      {
+        next() {
+          console.log('completed')
+        },
+        error(err){
+          console.error('failed to complete the task',err);
+        }
+      }
+    )
   }
 
-  async deleteTodo(id: string) {
+  deleteTodo(id: string) {
     const ref = doc(this.firestore, `todos/${id}`);
-    await deleteDoc(ref);
+    return from(deleteDoc(ref));
   }
-
+  markDeleted(id: string){
+    this.deleteTodo(id).subscribe(
+      {
+        next(){console.log('deleted')},
+        error(err){console.error('failed to delete',err)}
+      }
+    )
+  }
   searchTodo(selectedmenu: string, task: string) {
     const source = this.originalTodos();
 

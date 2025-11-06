@@ -15,7 +15,7 @@ export class TodoAdd {
   addTask(){
     const value=this.task.trim();
     if(value){
-      this.todoService.addTodo(value);
+      this.todoService.addTodo(value).subscribe(()=> console.log('added completed'));
       console.log(this.todoService.todos());
       this.task='';
     }else{
