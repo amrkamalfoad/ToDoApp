@@ -9,11 +9,5 @@ import { Todo } from '../../services/todo';
 })
 export class TodoPendingList {
   constructor(public todoService: Todo) {};
-  pendingTodos = computed(() =>
-    this.todoService.todos().filter(t => !t.completed)
-  );
-
-  pendingCount = computed(() =>
-    this.pendingTodos().length
-  );}
+}
 
