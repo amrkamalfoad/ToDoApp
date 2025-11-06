@@ -1,63 +1,74 @@
-import { Injectable } from '@angular/core';
-import { signal,computed } from '@angular/core';
+import { Injectable, signal, computed, effect, inject } from '@angular/core';
+import { Firestore, collection, collectionData, addDoc, deleteDoc, doc, updateDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+
 export interface todo {
-  id:number;
-  task:string;
-  completed:boolean;
- };
+  id: string;        // Firestore ID (string)
+  task: string;
+  completed: boolean;
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class Todo {
-private originalTodos = signal<todo[]>([]); //  Store the full list
- todos = signal<todo[]>([]); 
-  addTodo(task: string) {
-    this.todos.set(this.originalTodos());
-    const newTodo = { id: Date.now(), task, completed: false };
-    this.todos.update(current => [...current, newTodo]);
-    this.originalTodos.update(current => [...current, newTodo]);
+
+  private firestore = inject(Firestore);
+
+  private todosCollection = collection(this.firestore, 'todos');
+
+  // Signals
+  todos = signal<todo[]>([]);
+  originalTodos = signal<todo[]>([]);
+
+  constructor() {
+    collectionData(this.todosCollection, { idField: 'id' })
+      .subscribe({
+        next: (items) => {
+          this.originalTodos.set(items as todo[]);
+          this.todos.set(items as todo[]);
+        },
+        error: (error) => {
+          console.error('Firebase connection error:', error);
+          console.error('Please configure Firebase in src/enviroments/enviroment.ts');
+        }
+      });
   }
-  completeTodo(id: number) {
-    this.originalTodos.update(current =>
-      current.map(todo =>
-        todo.id === id ? { ...todo, completed: true } : todo
-      )
-    );  
-    this.todos.set(this.originalTodos());
+
+  async addTodo(task: string) {
+    try {
+      await addDoc(this.todosCollection, { task, completed: false });
+    } catch (error) {
+      console.error('Error adding todo:', error);
+      throw new Error('Failed to save todo. Please check Firebase configuration.');
+    }
   }
-  deleteTodo(id:number){
-    this.originalTodos.update(current=>
-      current.filter(todo=>todo.id!==id)
-    );
-    this.todos.set(this.originalTodos());
+
+  async completeTodo(id: string) {
+    const ref = doc(this.firestore, `todos/${id}`);
+    await updateDoc(ref, { completed: true });
   }
-  searchTodo(selectedmenu:string,task:string){
+
+  async deleteTodo(id: string) {
+    const ref = doc(this.firestore, `todos/${id}`);
+    await deleteDoc(ref);
+  }
+
+  searchTodo(selectedmenu: string, task: string) {
     const source = this.originalTodos();
-    if(selectedmenu==='Pending'){
+
+    if (selectedmenu === 'Pending') {
       this.todos.set(source.filter(t => !t.completed && t.task.includes(task)));
-    }else if(selectedmenu==='Completed'){
+    } else if (selectedmenu === 'Completed') {
       this.todos.set(source.filter(t => t.completed && t.task.includes(task)));
-    }else{
+    } else {
       this.todos.set(source);
     }
   }
-  pendingTodos = computed(() =>
-  {
-    return this.todos().filter(todo=>!todo.completed)
-  });
 
-  pendingCount = computed(() =>
-    this.pendingTodos().length
-  );
-  completedTodos = computed(() =>
-  {
-     return this.todos().filter(todo=>todo.completed)
-  });
-  
+  pendingTodos = computed(() => this.todos().filter(todo => !todo.completed));
+  pendingCount = computed(() => this.pendingTodos().length);
 
-  completedCount = computed(() =>
-    this.completedTodos().length
-  );
-
+  completedTodos = computed(() => this.todos().filter(todo => todo.completed));
+  completedCount = computed(() => this.completedTodos().length);
 }
